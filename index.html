@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>노마드맵 — 몰입을 설계하는 워크스페이스</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!--
+  페이지 전환 전략:
+  - radio input을 <body> 최상단에 모두 배치
+  - :checked 선택자로 해당 .page만 display:block
+  - 메인은 아무것도 선택 안 됐을 때 기본 표시 (checked 상태로 시작)
+-->
+
+<!-- ① 페이지 전환용 radio (body 최상단) -->
+<input type="radio" name="page" id="r-main"      class="page-radio" checked/>
+<input type="radio" name="page" id="r-search"    class="page-radio"/>
+<input type="radio" name="page" id="r-detail"    class="page-radio"/>
+<input type="radio" name="page" id="r-community" class="page-radio"/>
+<input type="radio" name="page" id="r-pass"      class="page-radio"/>
+<input type="radio" name="page" id="r-mypage"    class="page-radio"/>
+<input type="radio" name="page" id="r-login"     class="page-radio"/>
+<input type="radio" name="page" id="r-signup"    class="page-radio"/>
+<input type="radio" name="page" id="r-findid"    class="page-radio"/>
+<input type="radio" name="page" id="r-findpw"    class="page-radio"/>
+
+<!-- ② 탭 전환용 radio (body 최상단, 각 섹션 탭) -->
+<!-- 메인 맵탭 -->
+<input type="radio" name="maptab" id="mt-map"  class="page-radio" checked/>
+<input type="radio" name="maptab" id="mt-list" class="page-radio"/>
+<input type="radio" name="maptab" id="mt-heat" class="page-radio"/>
+<!-- 상세 탭 -->
+<input type="radio" name="dtab" id="dt-env"  class="page-radio" checked/>
+<input type="radio" name="dtab" id="dt-seat" class="page-radio"/>
+<input type="radio" name="dtab" id="dt-feed" class="page-radio"/>
+<!-- 커뮤니티 탭 -->
+<input type="radio" name="ctab" id="ct-dp" class="page-radio" checked/>
+<input type="radio" name="ctab" id="ct-fb" class="page-radio"/>
+<!-- 마이페이지 탭 -->
+<input type="radio" name="mytab" id="my-dash"  class="page-radio" checked/>
+<input type="radio" name="mytab" id="my-saved" class="page-radio"/>
+<input type="radio" name="mytab" id="my-log"   class="page-radio"/>
+<!-- 회원가입 단계 -->
+<input type="radio" name="step" id="step1" class="page-radio" checked/>
+<input type="radio" name="step" id="step2" class="page-radio"/>
+<input type="radio" name="step" id="step3" class="page-radio"/>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav__inner">
+    <label for="r-main" class="nav__logo">
+      <svg class="logo-svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#2D5016"/><path d="M20 8C14.48 8 10 12.48 10 18C10 25.5 20 34 20 34s10-8.5 10-16C30 12.48 25.52 8 20 8zm0 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#A8C97F"/></svg>
+      <span>노마드맵</span>
+    </label>
+    <ul class="nav__links">
+      <li><label for="r-main"      class="nav-link">홈</label></li>
+      <li><label for="r-search"    class="nav-link">공간 검색</label></li>
+      <li><label for="r-community" class="nav-link">커뮤니티</label></li>
+      <li><label for="r-pass"      class="nav-link">노마드 패스</label></li>
+    </ul>
+    <div class="nav__actions">
+      <label for="r-login"  class="btn btn--ghost">로그인</label>
+      <label for="r-signup" class="btn btn--primary">회원가입</label>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== PAGE WRAPPER ===================== -->
+<div class="pages">
+
+<!-- ===== MAIN ===== -->
+<div class="page" id="page-main">
+
+  <div class="hero-bg">
+  <div class="hero">
+    <div class="hero__content">
+      <p class="hero__eyebrow">📍 내 위치 기반 실시간 공간 추천</p>
+      <h1 class="hero__title">오늘, 어떤 작업 공간이<br>필요하세요?</h1>
+      <p class="hero__sub">카공족부터 프리랜서까지, 따로 또 같이 몰입하는 워크스페이스 큐레이션</p>
+      <div class="hero__search">
+        <input class="search-input" type="text" placeholder="장소명, 지역, 태그로 검색..."/>
+        <label for="r-search" class="btn btn--primary btn--lg">검색</label>
+      </div>
+      <div class="hero__tags">
+        <label for="r-search" class="tag">#콘센트_많은</label>
+        <label for="r-search" class="tag">#잔잔한_음악</label>
+        <label for="r-search" class="tag">#테이블_넓은</label>
+        <label for="r-search" class="tag">#와이파이_광속</label>
+        <label for="r-search" class="tag">#반려동물_동반</label>
+        <label for="r-search" class="tag">#조용한</label>
+      </div>
+    </div>
+    <div class="hero__map-preview">
+      <div class="map-preview">
+        <div class="map-grid-bg"></div>
+        <div class="pin-card pin-1"><strong>홍대 B공간</strong><span>잔여 3석 · 120m</span></div>
+        <div class="pin-card pin-2"><strong>성수 C라운지</strong><span>잔여 2석 · 240m</span></div>
+        <div class="pin-card pin-3"><strong>강남 A카페</strong><span>잔여 5석 · 380m</span></div>
+        <div class="seat-b s1">5석</div>
+        <div class="seat-b s2">2석</div>
+        <div class="seat-b s3">8석</div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /hero-bg -->
+
+  <!-- MAP TABS -->
+  <div class="section section--ivory">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">지도 보기</h2>
+        <div class="tab-group">
+          <label for="mt-map"  class="tab">🗺 지도</label>
+          <label for="mt-list" class="tab">📋 리스트</label>
+          <label for="mt-heat" class="tab">🔥 히트맵</label>
+        </div>
+      </div>
+      <!-- map -->
+      <div class="mtab-content" id="mc-map">
+        <div class="split-view">
+          <div class="list-panel">
+            <p class="result-count">검색 결과 <strong>24개</strong></p>
+            <label for="r-detail" class="space-row"><div class="space-row__info"><span class="space-name">강남역 A카페</span><span class="space-meta">잔여 5석 · 4.8점 · 120m</span></div><div class="badge-group"><span class="badge">콘센트</span><span class="badge">조용</span></div><span class="btn btn--xs btn--primary">예약</span></label>
+            <label for="r-detail" class="space-row"><div class="space-row__info"><span class="space-name">홍대 B라운지</span><span class="space-meta">잔여 2석 · 4.6점 · 210m</span></div><div class="badge-group"><span class="badge">채광</span><span class="badge">넓은책상</span></div><span class="btn btn--xs btn--primary">예약</span></label>
+            <label for="r-detail" class="space-row"><div class="space-row__info"><span class="space-name">성수 C워크스페이스</span><span class="space-meta">잔여 8석 · 4.9점 · 430m</span></div><div class="badge-group"><span class="badge">넓은책상</span><span class="badge">조용</span></div><span class="btn btn--xs btn--primary">예약</span></label>
+            <label for="r-detail" class="space-row"><div class="space-row__info"><span class="space-name">합정 D카페</span><span class="space-meta">잔여 1석 · 4.5점 · 520m</span></div><div class="badge-group"><span class="badge">광속와이파이</span></div><span class="btn btn--xs btn--primary">예약</span></label>
+          </div>
+          <div class="map-panel">
+            <div class="map-simple">
+              <div class="map-grid-lines"></div>
+              <!-- A카페: 우측 상단 -->
+              <div class="mpin" style="top:18%;left:58%">
+                <div class="mpin-card">
+                  <span class="mpin-name">강남역 A카페</span>
+                  <span class="mpin-seat">잔여 5석</span>
+                </div>
+                <div class="mpin-dot"></div>
+              </div>
+              <!-- B라운지: 중앙 좌측 -->
+              <div class="mpin" style="top:42%;left:20%">
+                <div class="mpin-card">
+                  <span class="mpin-name">홍대 B라운지</span>
+                  <span class="mpin-seat mpin-seat--low">잔여 2석</span>
+                </div>
+                <div class="mpin-dot"></div>
+              </div>
+              <!-- C워크스페이스: 우측 하단 -->
+              <div class="mpin" style="top:55%;left:62%">
+                <div class="mpin-card">
+                  <span class="mpin-name">성수 C워크스페이스</span>
+                  <span class="mpin-seat mpin-seat--many">잔여 8석</span>
+                </div>
+                <div class="mpin-dot"></div>
+              </div>
+              <!-- D카페: 좌측 하단 -->
+              <div class="mpin" style="top:68%;left:34%">
+                <div class="mpin-card">
+                  <span class="mpin-name">합정 D카페</span>
+                  <span class="mpin-seat mpin-seat--urgent">잔여 1석</span>
+                </div>
+                <div class="mpin-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- list -->
+      <div class="mtab-content" id="mc-list">
+        <div class="result-list-full">
+          <label for="r-detail" class="result-item"><div class="result-thumb"></div><div class="result-body"><h4>강남역 A카페</h4><p class="space-meta">잔여 5석 · ⭐ 4.8 · 120m</p><div class="badge-group"><span class="badge">콘센트</span><span class="badge">조용함</span></div><div class="stat-row"><span>📶 210Mbps</span><span>🔇 45dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t2"></div><div class="result-body"><h4>홍대 B라운지</h4><p class="space-meta">잔여 2석 · ⭐ 4.6 · 210m</p><div class="badge-group"><span class="badge">채광</span><span class="badge">넓은 책상</span></div><div class="stat-row"><span>📶 182Mbps</span><span>🔇 48dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t3"></div><div class="result-body"><h4>성수 C워크스페이스</h4><p class="space-meta">잔여 8석 · ⭐ 4.9 · 430m</p><div class="badge-group"><span class="badge">넓은 책상</span><span class="badge">Deep Work</span></div><div class="stat-row"><span>📶 145Mbps</span><span>🔇 42dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t4"></div><div class="result-body"><h4>합정 D카페</h4><p class="space-meta">잔여 1석 · ⭐ 4.5 · 520m</p><div class="badge-group"><span class="badge">광속 와이파이</span></div><div class="stat-row"><span>📶 310Mbps</span><span>🔇 52dB</span></div></div><span class="btn btn--primary">예약</span></label>
+        </div>
+      </div>
+      <!-- heatmap -->
+      <div class="mtab-content" id="mc-heat">
+        <div class="heatmap-wrapper">
+          <div class="heatmap-canvas">
+            <div class="heatmap-grid-lines"></div>
+            <!-- blur 없는 선명한 CSS 원형 -->
+            <div class="hcircle hc-red"    style="width:160px;height:160px;top:-10px;right:8%"></div>
+            <div class="hcircle hc-orange" style="width:140px;height:140px;top:22%;left:2%"></div>
+            <div class="hcircle hc-gold"   style="width:120px;height:120px;top:10%;left:30%"></div>
+            <div class="hcircle hc-gold"   style="width:110px;height:110px;bottom:8%;left:12%"></div>
+            <div class="hcircle hc-gold"   style="width:100px;height:100px;bottom:12%;right:22%"></div>
+            <p class="hmap-caption">몰입 인구가 많은 지역일수록 색이 진해집니다</p>
+          </div>
+          <div class="heatmap-info">
+            <div class="info-card"><span class="info-label">지금 집중 중</span><span class="info-value">127명</span></div>
+            <div class="info-card"><span class="info-label">예약 가능</span><span class="info-value">34석</span></div>
+            <div class="legend-card">
+              <p class="legend-title">히트맵 범례</p>
+              <div class="legend-row"><span class="ldot ldot-low"></span>낮음</div>
+              <div class="legend-row"><span class="ldot ldot-mid"></span>보통</div>
+              <div class="legend-row"><span class="ldot ldot-high"></span>높음</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP 3 -->
+  <div class="section section--fog">
+    <div class="container">
+      <h2 class="section-title">실시간 추천 TOP 3</h2>
+      <p class="section-sub">내 위치에서 지금 가장 집중하기 좋은 공간</p>
+      <div class="top3-grid">
+        <label for="r-detail" class="top-card"><div class="top-rank">1</div><h3>홍대 B공간</h3><p class="space-meta">잔여 3석 · 120m</p><div class="badge-group"><span class="badge badge-g">테이블 넓음</span><span class="badge badge-g">조용</span></div><div class="top-stats"><span>📶 182Mbps</span><span>🔇 48dB</span><span>⏱ 3.4h</span></div><span class="btn btn--primary btn--block">예약하기</span></label>
+        <label for="r-detail" class="top-card"><div class="top-rank">2</div><h3>성수 C라운지</h3><p class="space-meta">잔여 2석 · 240m</p><div class="badge-group"><span class="badge badge-g">채광 좋음</span><span class="badge badge-g">콘센트</span></div><div class="top-stats"><span>📶 145Mbps</span><span>🔇 42dB</span><span>⏱ 2.8h</span></div><span class="btn btn--primary btn--block">예약하기</span></label>
+        <label for="r-detail" class="top-card"><div class="top-rank">3</div><h3>강남 A카페</h3><p class="space-meta">잔여 5석 · 380m</p><div class="badge-group"><span class="badge badge-g">광속 와이파이</span><span class="badge badge-g">조용</span></div><div class="top-stats"><span>📶 210Mbps</span><span>🔇 45dB</span><span>⏱ 4.1h</span></div><span class="btn btn--primary btn--block">예약하기</span></label>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page-main -->
+
+<!-- ===== SEARCH ===== -->
+<div class="page" id="page-search">
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">작업 환경 검색</h1>
+      <div class="search-bar">
+        <input class="search-input search-input--light" type="text" placeholder="오늘 어떤 작업 공간이 필요하세요?"/>
+        <label for="r-detail" class="btn btn--primary">검색</label>
+        <label for="r-search" class="btn btn--dark">📍 현재 위치</label>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="search-layout">
+      <aside class="filter-panel">
+        <h3 class="filter-title">필터</h3>
+        <div class="filter-group"><p class="filter-label">소음 수준</p><div class="pill-group"><input type="radio" name="noise" id="n1" class="page-radio" checked/><label for="n1" class="pill">낮음</label><input type="radio" name="noise" id="n2" class="page-radio"/><label for="n2" class="pill">중간</label><input type="radio" name="noise" id="n3" class="page-radio"/><label for="n3" class="pill">높음</label></div></div>
+        <div class="filter-group"><p class="filter-label">좌석 유형</p><div class="pill-group"><input type="radio" name="seat" id="s1" class="page-radio"/><label for="s1" class="pill">창가</label><input type="radio" name="seat" id="s2" class="page-radio" checked/><label for="s2" class="pill">구석</label><input type="radio" name="seat" id="s3" class="page-radio"/><label for="s3" class="pill">테이블</label></div></div>
+        <div class="filter-group"><p class="filter-label">와이파이 속도</p><div class="pill-group"><input type="radio" name="wifi" id="w1" class="page-radio" checked/><label for="w1" class="pill">100Mbps+</label><input type="radio" name="wifi" id="w2" class="page-radio"/><label for="w2" class="pill">50Mbps+</label><input type="radio" name="wifi" id="w3" class="page-radio"/><label for="w3" class="pill">제한없음</label></div></div>
+        <div class="filter-group"><p class="filter-label">체류 시간</p><div class="pill-group"><input type="radio" name="time" id="t1" class="page-radio"/><label for="t1" class="pill">2시간+</label><input type="radio" name="time" id="t2" class="page-radio" checked/><label for="t2" class="pill">4시간+</label><input type="radio" name="time" id="t3" class="page-radio"/><label for="t3" class="pill">종일</label></div></div>
+        <div class="filter-group"><p class="filter-label">반려동물</p><div class="pill-group"><input type="radio" name="pet" id="p1" class="page-radio"/><label for="p1" class="pill">가능</label><input type="radio" name="pet" id="p2" class="page-radio"/><label for="p2" class="pill">불가</label><input type="radio" name="pet" id="p3" class="page-radio" checked/><label for="p3" class="pill">상관없음</label></div></div>
+      </aside>
+      <div class="result-area">
+        <div class="result-bar"><span class="result-count">검색 결과 <strong>24개</strong></span></div>
+        <div class="result-list-full">
+          <label for="r-detail" class="result-item"><div class="result-thumb"></div><div class="result-body"><h4>강남역 A카페</h4><p class="space-meta">잔여 5석 · ⭐ 4.8 · 120m</p><div class="badge-group"><span class="badge">콘센트</span><span class="badge">조용함</span></div><div class="stat-row"><span>📶 210Mbps</span><span>🔇 45dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t2"></div><div class="result-body"><h4>홍대 B라운지</h4><p class="space-meta">잔여 2석 · ⭐ 4.6 · 210m</p><div class="badge-group"><span class="badge">채광</span><span class="badge">넓은 책상</span></div><div class="stat-row"><span>📶 182Mbps</span><span>🔇 48dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t3"></div><div class="result-body"><h4>성수 C워크스페이스</h4><p class="space-meta">잔여 8석 · ⭐ 4.9 · 430m</p><div class="badge-group"><span class="badge">넓은 책상</span><span class="badge">Deep Work 추천</span></div><div class="stat-row"><span>📶 145Mbps</span><span>🔇 42dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t4"></div><div class="result-body"><h4>합정 D카페</h4><p class="space-meta">잔여 1석 · ⭐ 4.5 · 520m</p><div class="badge-group"><span class="badge">광속 와이파이</span></div><div class="stat-row"><span>📶 310Mbps</span><span>🔇 52dB</span></div></div><span class="btn btn--primary">예약</span></label>
+          <label for="r-detail" class="result-item"><div class="result-thumb t5"></div><div class="result-body"><h4>마포 E라운지</h4><p class="space-meta">잔여 4석 · ⭐ 4.7 · 680m</p><div class="badge-group"><span class="badge">반려동물</span><span class="badge">창가</span></div><div class="stat-row"><span>📶 98Mbps</span><span>🔇 50dB</span></div></div><span class="btn btn--primary">예약</span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-search -->
+
+<!-- ===== DETAIL ===== -->
+<div class="page" id="page-detail">
+  <div class="container">
+    <label for="r-search" class="back-btn">← 검색 결과로</label>
+    <div class="detail-hero">
+      <div class="detail-main">
+        <div class="detail-header">
+          <h1 class="detail-title">홍대 B공간</h1>
+          <span class="status-badge avail">잔여 3석</span>
+          <span class="status-badge book">예약 가능</span>
+        </div>
+        <div class="reason-row"><span class="reason-label">지금 이 공간이 좋은 이유</span><span class="badge badge-g">테이블 넓음</span><span class="badge badge-g">와이파이 빠름</span><span class="badge badge-g">조용함</span></div>
+        <div class="detail-photo"><span class="photo-text">실사 데이터 슬라이드</span><span class="photo-sub">책상 높이 · 콘센트 위치 · 창가 채광</span></div>
+      </div>
+      <div class="detail-sidebar">
+        <div class="stat-row-v"><span>📍</span><span>홍대입구역 4분</span></div>
+        <div class="stat-row-v"><span>📶</span><span>다운로드 182Mbps</span></div>
+        <div class="stat-row-v"><span>🔇</span><span>평균 소음 48dB</span></div>
+        <div class="stat-row-v"><span>⭐</span><span>추천 구역: 2층 구석</span></div>
+        <div class="stat-row-v"><span>⏱</span><span>평균 체류 3.4시간</span></div>
+        <label for="r-detail" class="btn btn--primary btn--block btn--lg">집중 좌석 예약하기</label>
+      </div>
+    </div>
+    <!-- detail tabs -->
+    <div class="detail-tab-bar">
+      <label for="dt-env"  class="dtab">환경 리포트</label>
+      <label for="dt-seat" class="dtab">좌석 맵</label>
+      <label for="dt-feed" class="dtab">라이브 피드</label>
+    </div>
+    <div class="dtab-content" id="dc-env">
+      <div class="report-grid">
+        <div><h3 class="rep-title">시간대별 평균 소음 (dB)</h3><div class="bar-chart"><div class="bg"><div class="bar" style="height:42%"><span class="bv">42</span></div><span class="bl">09시</span></div><div class="bg"><div class="bar" style="height:45%"><span class="bv">45</span></div><span class="bl">11시</span></div><div class="bg"><div class="bar bar-peak" style="height:78%"><span class="bv">55</span></div><span class="bl">13시</span></div><div class="bg"><div class="bar" style="height:66%"><span class="bv">51</span></div><span class="bl">15시</span></div><div class="bg"><div class="bar" style="height:60%"><span class="bv">49</span></div><span class="bl">18시</span></div><div class="bg"><div class="bar bar-low" style="height:38%"><span class="bv">43</span></div><span class="bl">21시</span></div></div></div>
+        <div><h3 class="rep-title">네트워크 속도</h3><div class="net-cards"><div class="net-card"><span>⬇</span><strong>다운로드 182Mbps</strong></div><div class="net-card"><span>⬆</span><strong>업로드 91Mbps</strong></div><div class="net-card"><span>🎥</span><strong>화상회의 안정성 높음</strong></div><div class="net-card"><span>☁️</span><strong>클라우드 작업 적합</strong></div></div></div>
+      </div>
+    </div>
+    <div class="dtab-content" id="dc-seat">
+      <h3 class="rep-title">집중 구역 평면도</h3>
+      <div class="floor-grid">
+        <div class="zone zone-win"><strong>창가</strong><small>채광 좋음</small></div>
+        <div class="zone zone-ctr"><strong>중앙</strong><small>소음 보통</small></div>
+        <div class="zone zone-cor"><strong>구석</strong><small>Deep Work 추천 ✨</small></div>
+        <div class="zone zone-cnt"><strong>카운터</strong></div>
+        <div class="zone zone-str"><strong>2층 계단</strong></div>
+      </div>
+    </div>
+    <div class="dtab-content" id="dc-feed">
+      <h3 class="rep-title">장소별 라이브 피드</h3>
+      <div class="feed-list">
+        <div class="feed-item"><span class="feed-av">🦁</span><div class="feed-body"><strong>프로그래밍하는 사자</strong><p>2층 구석 에어컨 조금 셈</p></div><span class="feed-time">방금</span></div>
+        <div class="feed-item"><span class="feed-av">🐰</span><div class="feed-body"><strong>디자인하는 토끼</strong><p>창가 채광 최고예요 🌤</p></div><span class="feed-time">2분 전</span></div>
+        <div class="feed-item"><span class="feed-av">🐼</span><div class="feed-body"><strong>기획하는 판다</strong><p>방금 쿠키 서비스 받았어요</p></div><span class="feed-time">5분 전</span></div>
+        <div class="feed-item"><span class="feed-av">🦊</span><div class="feed-body"><strong>공부하는 여우</strong><p>콘센트는 벽면 쪽이 넉넉해요</p></div><span class="feed-time">8분 전</span></div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-detail -->
+
+<!-- ===== COMMUNITY ===== -->
+<div class="page" id="page-community">
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">커뮤니티</h1>
+      <div class="comm-tab-bar">
+        <label for="ct-dp" class="ctab">디지털 칸막이</label>
+        <label for="ct-fb" class="ctab">Focus Buddy</label>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="ctab-content" id="cc-dp">
+      <div class="partition-layout">
+        <div>
+          <h3 class="sub-title">오늘의 집중 룸</h3>
+          <div class="room-grid">
+            <div class="room-card"><div class="room-av">🦁</div><p class="room-status">코딩 중</p><span class="room-mode">Deep Work</span></div>
+            <div class="room-card room-active"><div class="room-av">🐰</div><p class="room-status">디자인 중</p><span class="room-mode">ASMR 공유</span></div>
+            <div class="room-card"><div class="room-av">🐱</div><p class="room-status">자격증 공부</p><span class="room-mode room-timer">25:00</span></div>
+            <div class="room-card"><div class="room-av">🐶</div><p class="room-status">자료 조사</p><span class="room-mode">휴식 예정</span></div>
+            <div class="room-card room-mine"><div class="room-av">🐻</div><p class="room-status">기획 중</p><span class="room-mode">집중 유지</span></div>
+            <div class="room-card"><div class="room-av">🦊</div><p class="room-status">리뷰 작성</p><span class="room-mode">소통 가능</span></div>
+          </div>
+        </div>
+        <div class="my-session">
+          <div class="session-box"><h4>집중 타이머</h4><div class="timer-display">24:18</div><p class="timer-note">현재 세션 진행 중</p></div>
+          <div class="session-box"><h4>오늘의 목표</h4><ul class="goal-list"><li class="goal-done">✓ 기획안 마감</li><li>• 회의자료 수정</li><li>• 2세션 완료</li></ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="ctab-content" id="cc-fb">
+      <div class="buddy-layout">
+        <div class="buddy-card">
+          <h2 class="buddy-title">Focus Buddy</h2>
+          <div class="buddy-info">
+            <div class="buddy-row"><span>🎯 목표</span><strong>리눅스 시험 공부</strong></div>
+            <div class="buddy-row"><span>👥 멤버</span><strong>4명</strong></div>
+            <div class="buddy-row"><span>⏱ 세션</span><strong>25분 집중 / 5분 휴식</strong></div>
+            <div class="buddy-row"><span>📍 상태</span><strong class="hl">19분 진행 중</strong></div>
+          </div>
+          <label for="r-community" class="btn btn--primary btn--block btn--lg">💬 휴식 채팅 참여</label>
+          <p class="buddy-note">휴식 시간에만 짧은 팝업 대화가 열려 서로를 가볍게 독려할 수 있습니다.</p>
+        </div>
+        <div class="buddy-rooms">
+          <h3>현재 참여 중인 방</h3>
+          <div class="broom"><div class="broom-info"><p>토익 공부방</p><small>8명 · 12분 진행 중</small></div><label for="r-community" class="btn btn--ghost btn--sm">참여</label></div>
+          <div class="broom"><div class="broom-info"><p>정보처리기사 스터디</p><small>3명 · 세션 준비 중</small></div><label for="r-community" class="btn btn--ghost btn--sm">참여</label></div>
+          <div class="broom"><div class="broom-info"><p>사이드 프로젝트 팀</p><small>6명 · 휴식 중 💬</small></div><label for="r-community" class="btn btn--primary btn--sm">채팅 참여</label></div>
+          <label for="r-community" class="btn btn--ghost btn--block" style="margin-top:12px">+ 새 방 만들기</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-community -->
+
+<!-- ===== PASS ===== -->
+<div class="page" id="page-pass">
+  <div class="page-header tc"><div class="container"><h1 class="page-title">Nomad Pass</h1><p class="page-sub">월 3만 원으로 카페 할인 + 공유오피스 이용권 + 예약 우선권</p></div></div>
+  <div class="container">
+    <div class="pass-hero tc"><div class="pass-price-box"><p class="pass-price-label">월정액</p><p class="pass-price">₩30,000<span>/월</span></p><p class="pass-tagline">카공족부터 프리랜서까지 모두를 위한 패스</p></div></div>
+    <div class="benefits-grid">
+      <div class="benefit-card"><div class="benefit-icon">☕</div><h4>아메리카노 할인</h4><p>제휴 카페 매일 1,000원 할인</p></div>
+      <div class="benefit-card"><div class="benefit-icon">🏢</div><h4>공유오피스 일일권 2매</h4><p>제휴 공유오피스 월 2장 제공</p></div>
+      <div class="benefit-card"><div class="benefit-icon">⚡</div><h4>집중 좌석 우선 예약</h4><p>일반 회원보다 1시간 먼저 예약</p></div>
+      <div class="benefit-card"><div class="benefit-icon">📊</div><h4>프리미엄 리포트 열람</h4><p>나의 생산성 패턴 분석 제공</p></div>
+    </div>
+    <div class="pass-cta tc"><label for="r-pass" class="btn btn--primary btn--xl">패스 시작하기</label><p class="pass-note">언제든지 해지 가능 · 첫 달 무료 체험</p></div>
+  </div>
+</div><!-- /page-pass -->
+
+<!-- ===== MYPAGE ===== -->
+<div class="page" id="page-mypage">
+  <div class="container">
+    <div class="mypage-layout">
+      <aside class="my-sidebar">
+        <div class="my-profile"><div class="my-avatar">🐻</div><p class="my-name">기획하는 판다</p><span class="pass-tag">Nomad Pass</span></div>
+        <nav class="my-nav">
+          <label for="my-dash"  class="my-nav-item">📊 대시보드</label>
+          <label for="my-saved" class="my-nav-item">🔖 저장한 장소</label>
+          <label for="my-log"   class="my-nav-item">📝 워크로그</label>
+          <label for="r-pass"   class="my-nav-item">🎫 노마드 패스</label>
+        </nav>
+      </aside>
+      <div class="my-content">
+        <div class="mytab-content" id="mc-dash">
+          <h2 class="my-title">나의 워크로그</h2>
+          <div class="stat-cards"><div class="stat-card"><p class="sc-label">이번 주 작업</p><p class="sc-value">18h</p></div><div class="stat-card"><p class="sc-label">집중 성공률</p><p class="sc-value">84%</p></div><div class="stat-card"><p class="sc-label">저장한 장소</p><p class="sc-value">12곳</p></div></div>
+          <div class="dash-lower">
+            <div class="weekly-box"><h4>이번 주 작업 시간 (h)</h4><div class="bar-chart bar-chart--sm"><div class="bg"><div class="bar" style="height:60%"></div><span class="bl">월</span></div><div class="bg"><div class="bar bar-peak" style="height:80%"></div><span class="bl">화</span></div><div class="bg"><div class="bar" style="height:40%"></div><span class="bl">수</span></div><div class="bg"><div class="bar bar-peak" style="height:100%"></div><span class="bl">목</span></div><div class="bg"><div class="bar" style="height:80%"></div><span class="bl">금</span></div></div></div>
+            <div class="quick-info"><div class="qi"><p class="sc-label">Nomad Pass</p><p class="qi-val">잔여 18일</p></div><div class="qi"><p class="sc-label">최근 방문</p><p class="qi-val">성수 C라운지</p></div></div>
+          </div>
+        </div>
+        <div class="mytab-content" id="mc-saved">
+          <h2 class="my-title">저장한 장소</h2>
+          <div class="saved-list">
+            <label for="r-detail" class="saved-item"><div class="saved-thumb"></div><div class="saved-info"><h4>성수 C라운지</h4><p>잔여 2석 · ⭐ 4.9</p></div><span class="btn btn--ghost btn--sm">바로가기</span></label>
+            <label for="r-detail" class="saved-item"><div class="saved-thumb t2"></div><div class="saved-info"><h4>홍대 B공간</h4><p>잔여 3석 · ⭐ 4.6</p></div><span class="btn btn--ghost btn--sm">바로가기</span></label>
+            <label for="r-detail" class="saved-item"><div class="saved-thumb t3"></div><div class="saved-info"><h4>강남 A카페</h4><p>잔여 5석 · ⭐ 4.8</p></div><span class="btn btn--ghost btn--sm">바로가기</span></label>
+          </div>
+        </div>
+        <div class="mytab-content" id="mc-log">
+          <h2 class="my-title">워크로그 상세</h2>
+          <div class="worklog-layout">
+            <div>
+              <h4 style="margin-bottom:12px;color:var(--g-dark)">월간 집중 리포트</h4>
+              <svg class="line-svg" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a8a3a" stop-opacity="0.3"/><stop offset="100%" stop-color="#5a8a3a" stop-opacity="0"/></linearGradient></defs><polygon points="20,120 130,90 240,70 360,30 360,150 20,150" fill="url(#lg)"/><polyline points="20,120 130,90 240,70 360,30" fill="none" stroke="#5a8a3a" stroke-width="2.5" stroke-linecap="round"/><circle cx="20" cy="120" r="5" fill="#5a8a3a"/><circle cx="130" cy="90" r="5" fill="#5a8a3a"/><circle cx="240" cy="70" r="5" fill="#5a8a3a"/><circle cx="360" cy="30" r="5" fill="#5a8a3a"/><text x="10" y="152" font-size="11" fill="#888">1주</text><text x="120" y="152" font-size="11" fill="#888">2주</text><text x="230" y="152" font-size="11" fill="#888">3주</text><text x="350" y="152" font-size="11" fill="#888">4주</text></svg>
+              <div class="insight-grid"><div class="insight-card ic-g"><span>📍</span><p>가장 잘 맞는 환경: <strong>조용한 구석</strong></p></div><div class="insight-card ic-y"><span>🌅</span><p>오전 9~12시 <strong>집중도 최고</strong></p></div><div class="insight-card ic-g"><span>📋</span><p>넓은 테이블 <strong>선호도 높음</strong></p></div><div class="insight-card ic-r"><span>📉</span><p>느린 와이파이 <strong>이탈률 높음</strong></p></div></div>
+            </div>
+            <div class="top-places"><h4>자주 가는 장소 TOP 3</h4><div class="tp-item"><span class="tp-rank">1</span><div><p>성수 C라운지</p><small>12회</small></div></div><div class="tp-item"><span class="tp-rank">2</span><div><p>홍대 B공간</p><small>9회</small></div></div><div class="tp-item"><span class="tp-rank">3</span><div><p>강남 A카페</p><small>7회</small></div></div><h4 style="margin-top:20px;margin-bottom:10px">개인 추천 태그</h4><div class="badge-group"><span class="badge badge-g">#조용함</span><span class="badge badge-g">#창가</span><span class="badge badge-g">#콘센트</span><span class="badge badge-g">#4시간이상</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- /page-mypage -->
+
+<!-- ===== LOGIN ===== -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <label for="r-main" class="auth-logo"><svg class="logo-svg logo-svg--sm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#2D5016"/><path d="M20 8C14.48 8 10 12.48 10 18C10 25.5 20 34 20 34s10-8.5 10-16C30 12.48 25.52 8 20 8zm0 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#A8C97F"/></svg>노마드맵</label>
+      <h2 class="auth-title">Login</h2>
+      <div class="form-group"><label class="form-label">이메일</label><input class="form-input" type="email" placeholder="email@example.com"/></div>
+      <div class="form-group"><label class="form-label">비밀번호</label><input class="form-input" type="password" placeholder="••••••••"/></div>
+      <label for="r-mypage" class="btn btn--primary btn--block btn--lg">로그인</label>
+      <div class="social-row">
+        <label for="r-mypage" class="social-btn">Google</label>
+        <label for="r-mypage" class="social-btn social-kakao">Kakao</label>
+        <label for="r-mypage" class="social-btn social-naver">Naver</label>
+      </div>
+      <div class="auth-links"><label for="r-findid" style="color:var(--g-sage);cursor:pointer">아이디 찾기</label><span>|</span><label for="r-findpw" style="color:var(--g-sage);cursor:pointer">비밀번호 찾기</label><span>|</span><label for="r-signup" style="color:var(--g-sage);cursor:pointer">회원가입</label></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SIGNUP ===== -->
+<div class="page" id="page-signup">
+  <div class="auth-wrap">
+    <div class="auth-card auth-card--wide">
+      <div class="step-tabs">
+        <label for="step1" class="step-tab">1. 약관 동의</label>
+        <label for="step2" class="step-tab">2. 기본정보</label>
+        <label for="step3" class="step-tab">3. 완료</label>
+      </div>
+      <div class="signup-step" id="ss1"><div class="agree-list"><div class="agree-item agree-all"><input type="checkbox"/><label><strong>전체 동의</strong></label><button class="btn-text">보기</button></div><div class="agree-item"><input type="checkbox"/><label>[필수] 이용약관 동의</label><button class="btn-text">보기</button></div><div class="agree-item"><input type="checkbox"/><label>[필수] 개인정보 수집 및 이용</label><button class="btn-text">보기</button></div><div class="agree-item"><input type="checkbox"/><label>[선택] 마케팅 정보 수신 동의</label><button class="btn-text">보기</button></div></div><label for="step2" class="btn btn--primary btn--block">다음</label></div>
+      <div class="signup-step" id="ss2"><div class="form-group"><label class="form-label">이메일</label><input class="form-input" type="email" placeholder="email@example.com"/></div><div class="form-group"><label class="form-label">비밀번호</label><input class="form-input" type="password" placeholder="••••••••"/></div><div class="form-group"><label class="form-label">비밀번호 확인</label><input class="form-input" type="password" placeholder="••••••••"/></div><div class="form-group"><label class="form-label">닉네임</label><input class="form-input" type="text" placeholder="기획하는판다"/></div><div class="btn-row"><label for="step1" class="btn btn--ghost">이전</label><label for="step3" class="btn btn--primary">가입하기</label></div></div>
+      <div class="signup-step" id="ss3"><div class="complete-icon">✓</div><h3 class="complete-title">회원가입이 완료되었어요!</h3><p class="complete-sub">지금 바로 내 주변 작업 공간을 찾아보세요</p><div class="btn-row"><label for="r-main" class="btn btn--primary">메인으로 가기</label><label for="r-main" class="btn btn--ghost">선호 태그 설정</label></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FIND-ID ===== -->
+<div class="page" id="page-findid">
+  <div class="auth-wrap"><div class="auth-card"><h2 class="auth-title">아이디 찾기</h2><p class="auth-sub">가입한 정보를 입력해주세요</p><div class="form-group"><label class="form-label">이름 또는 닉네임</label><input class="form-input" type="text" placeholder="이름 또는 닉네임"/></div><div class="form-group"><label class="form-label">휴대폰 번호</label><div class="input-row"><input class="form-input" type="tel" placeholder="010-0000-0000"/><label for="r-findid" class="btn btn--ghost btn--sm">인증번호</label></div></div><label for="r-login" class="btn btn--primary btn--block">아이디 확인하기</label><div class="auth-links"><label for="r-login" style="color:var(--g-sage);cursor:pointer">로그인으로 돌아가기</label></div></div></div>
+</div>
+
+<!-- ===== FIND-PW ===== -->
+<div class="page" id="page-findpw">
+  <div class="auth-wrap"><div class="auth-card"><h2 class="auth-title">비밀번호 재설정</h2><div class="form-group"><label class="form-label">가입한 이메일</label><input class="form-input" type="email" placeholder="email@example.com"/></div><div class="form-group"><label class="form-label">인증번호</label><input class="form-input" type="text" placeholder="6자리 인증번호"/></div><div class="form-group"><label class="form-label">새 비밀번호</label><input class="form-input" type="password" placeholder="••••••••"/></div><div class="form-group"><label class="form-label">비밀번호 확인</label><input class="form-input" type="password" placeholder="••••••••"/></div><label for="r-login" class="btn btn--primary btn--block">재설정 완료</label><div class="auth-links"><label for="r-login" style="color:var(--g-sage);cursor:pointer">로그인으로 돌아가기</label></div></div></div>
+</div>
+
+</div><!-- /pages -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand"><svg class="logo-svg logo-svg--sm" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#2D5016"/><path d="M20 8C14.48 8 10 12.48 10 18C10 25.5 20 34 20 34s10-8.5 10-16C30 12.48 25.52 8 20 8zm0 14c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" fill="#A8C97F"/></svg><p>공간을 찾는 서비스가 아니라,<br>사람의 몰입을 설계하는 서비스</p></div>
+      <div class="footer-links"><label for="r-main" style="cursor:pointer;color:rgba(255,255,255,.5)">서비스 소개</label><label for="r-main" style="cursor:pointer;color:rgba(255,255,255,.5)">이용약관</label><label for="r-main" style="cursor:pointer;color:rgba(255,255,255,.5)">개인정보처리방침</label></div>
+    </div>
+    <p class="footer-copy">© 2025 NomadMap. All rights reserved.</p>
+  </div>
+</footer>
+
+
+</body>
+</html>
